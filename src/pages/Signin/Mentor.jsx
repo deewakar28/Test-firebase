@@ -3,11 +3,15 @@ import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { auth, googleProvider } from '../../config/firebase'
 import { collection, addDoc} from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import Navbar from '../../components/Navbar';
+import { useAuth } from '../../context/userAuth';
 
 const Mentor = () => {
 
     const userCollectionRef = collection(db, "users");
 
+    const {login} = useAuth();
+    
     const [user, setUser] = useState({
         userName: "",
         email: "",
@@ -40,6 +44,8 @@ const Mentor = () => {
                 role: "Mentor",
                 userId: auth?.currentUser?.uid,
               })
+
+              login();
       
               console.log('User registered successfully:', userCredential.user);
             
@@ -54,18 +60,23 @@ const Mentor = () => {
             const result = await signInWithPopup(auth, googleProvider);
 
             const user = result.user;
-            
+
             await addDoc(userCollectionRef, {
                 email: user.email,
                 userName: user.displayName, 
                 role: 'Mentor',
                 userId: user.uid,
             });
+
+            login();
+
         } catch (error) {
             console.log(error);
         }
     }
   return (
+  <>
+   <Navbar/>
     <section class="bg-gray-50 dark:bg-gray-900">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
@@ -109,6 +120,8 @@ const Mentor = () => {
         </div>
     </div>
   </section>
+  </>
+   
   )
 }
 
