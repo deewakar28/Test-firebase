@@ -52,10 +52,16 @@ function Home1() {
     };
   };
 
+  
   return (
     <div className="">
       <button onClick={handleButtonClick}>Trigger Notification</button>
       <div>Welcome to homepage</div>
+      <button>
+        <a href="/payment" style={{ textDecoration: 'none', color: 'inherit' }}>
+          Go to Payment Page
+        </a>
+      </button>
     </div>
   );
 }

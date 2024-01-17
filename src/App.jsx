@@ -6,6 +6,7 @@ import './App.css'
 import Mentee from './pages/Signin/Mentee'
 import Mentor from './pages/Signin/Mentor'
 import Home1 from './pages/Home1'
+import Payment from './pages/Payment'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path='/Mentee' element={<Mentee/>}/>
         <Route path='/room/:roomId' element={<RoomPage/>} />
         <Route  path='/home1' element={<Home1/>}/>
+        <Route  path='/payment' element={<Payment/>}/>
       </Routes>
     </>
   )
