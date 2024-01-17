@@ -20,6 +20,11 @@ function HomePage() {
         handleEnterRoom();
     };
 
+    const handleGoToHome1 = () => {
+        // Navigate to Home1 component when the button is clicked
+        navigate('/home1');
+    };
+
     return (
         <div className="w-full flex items-center justify-center bg-gray-100">
             <div className="bg-white shadow-md rounded-md p-8 w-full max-w-md">
@@ -46,6 +51,14 @@ function HomePage() {
                         </button>
                     </div>
                 </form>
+                <div className="mt-4">
+                    <button
+                        onClick={handleGoToHome1}
+                        className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline"
+                    >
+                        Go to Home1
+                    </button>
+                </div>
             </div>
         </div>
     );

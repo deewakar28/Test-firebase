@@ -5,6 +5,7 @@ import RoomPage from './pages/room'
 import './App.css'
 import Mentee from './pages/Signin/Mentee'
 import Mentor from './pages/Signin/Mentor'
+import Home1 from './pages/Home1'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Route path='/Mentor' element={<Mentor/>}/>
         <Route path='/Mentee' element={<Mentee/>}/>
         <Route path='/room/:roomId' element={<RoomPage/>} />
+        <Route  path='/home1' element={<Home1/>}/>
       </Routes>
     </>
   )
