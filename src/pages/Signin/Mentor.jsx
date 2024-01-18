@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const Mentor = () => {
 
-    const userCollectionRef = collection(db, "users");
+    const mentorCollectionRef = collection(db, "Mentors");
     const navigate = useNavigate();
     const {login} = useAuth();
     
@@ -40,14 +40,15 @@ const Mentor = () => {
               );
 
               localStorage.setItem('userEmail', user.email);
-              localStorage.setItem('userName', user.displayName);
+              localStorage.setItem('userName', user.userName);
               localStorage.setItem('userRole', 'Mentor');
               localStorage.setItem('userId', user.uid);
+              localStorage.setItem('roomCode', 'none');
+              
       
-              await addDoc(userCollectionRef,{
+              await addDoc(mentorCollectionRef,{
                 email: user.email,
-                userName: user.u,
-                role: "Mentor",
+                userName: user.userName,
                 userId: auth?.currentUser?.uid,
               })
 
@@ -73,10 +74,9 @@ const Mentor = () => {
             localStorage.setItem('userRole', 'Mentor');
             localStorage.setItem('userId', user.uid);
 
-            await addDoc(userCollectionRef, {
+            await addDoc(mentorCollectionRef, {
                 email: user.email,
                 userName: user.displayName, 
-                role: 'Mentor',
                 userId: user.uid,
             });
 
