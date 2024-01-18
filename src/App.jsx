@@ -7,6 +7,7 @@ import Mentee from './pages/Signin/Mentee'
 import Mentor from './pages/Signin/Mentor'
 import Home1 from './pages/Home1'
 import Payment from './pages/Payment'
+import Test from './components/Test'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path='/room/:roomId' element={<RoomPage/>} />
         <Route  path='/home1' element={<Home1/>}/>
         <Route  path='/payment' element={<Payment/>}/>
+        <Route  path='/Admin' element={<Test/>}/>
       </Routes>
     </>
   )

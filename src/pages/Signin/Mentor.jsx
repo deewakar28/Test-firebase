@@ -5,11 +5,12 @@ import { collection, addDoc} from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import Navbar from '../../components/Navbar';
 import { useAuth } from '../../context/userAuth';
+import { useNavigate } from "react-router-dom";
 
 const Mentor = () => {
 
     const userCollectionRef = collection(db, "users");
-
+    const navigate = useNavigate();
     const {login} = useAuth();
     
     const [user, setUser] = useState({
@@ -37,6 +38,11 @@ const Mentor = () => {
                 user.email,
                 user.password
               );
+
+              localStorage.setItem('userEmail', user.email);
+              localStorage.setItem('userName', user.displayName);
+              localStorage.setItem('userRole', 'Mentor');
+              localStorage.setItem('userId', user.uid);
       
               await addDoc(userCollectionRef,{
                 email: user.email,
@@ -46,6 +52,7 @@ const Mentor = () => {
               })
 
               login();
+              navigate("/Admin");
       
               console.log('User registered successfully:', userCredential.user);
             
@@ -61,6 +68,11 @@ const Mentor = () => {
 
             const user = result.user;
 
+            localStorage.setItem('userEmail', user.email);
+            localStorage.setItem('userName', user.displayName);
+            localStorage.setItem('userRole', 'Mentor');
+            localStorage.setItem('userId', user.uid);
+
             await addDoc(userCollectionRef, {
                 email: user.email,
                 userName: user.displayName, 
@@ -68,7 +80,10 @@ const Mentor = () => {
                 userId: user.uid,
             });
 
+            console.log(user);
+
             login();
+            navigate("/Admin");
 
         } catch (error) {
             console.log(error);
