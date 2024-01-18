@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
+import { updateDoc, getDocs, doc, collection } from 'firebase/firestore';
+import { db , auth} from '../../config/firebase';
 
 function HomePage() {
     const [roomCode, setRoomCode] = useState('');
     const navigate = useNavigate();
+
+    const mentorCollectionRef = collection(db, "Mentors");
 
     const handleRoomCodeChange = (event) => {
         setRoomCode(event.target.value);
@@ -16,13 +20,40 @@ function HomePage() {
         navigate(`/room/${roomCode}`);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault();
-        handleEnterRoom();
+        
+        const data = await getDocs(mentorCollectionRef);
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }))
+
+        const currentUserId = auth?.currentUser?.uid;
+
+        const foundDocument = filteredData.find((doc) => doc.userId === currentUserId);
+
+            const foundDocumentId = foundDocument.id;
+            
+            const mentorDocRef = doc(db, "Mentors", foundDocumentId);
+        
+            try {
+
+                await updateDoc(mentorDocRef, {
+                    roomCode: roomCode,
+                });
+        
+                await handleEnterRoom();
+                
+                console.log('Room code updated successfully.');
+            } catch (error) {
+                console.error('Error updating room code:', error.message);
+            }
+        
     };
 
     const handleGoToHome1 = () => {
-        // Navigate to Home1 component when the button is clicked
+
         navigate('/home1');
     };
 
