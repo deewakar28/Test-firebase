@@ -1,5 +1,5 @@
 
-import React, { createContext, useReducer, useContext } from 'react';
+import React, { createContext, useReducer, useContext, useEffect } from 'react';
 
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
@@ -16,13 +16,17 @@ const authReducer = (state, action) => {
 };
 
 const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
 };
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(state.isLoggedIn));
+  }, [state.isLoggedIn]);
 
   const login = () => {
     dispatch({ type: LOGIN });
